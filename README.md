@@ -1,6 +1,6 @@
 # BookHive - A Book Management Web App
 
-Bookish is a web application designed for managing and storing book information, including the book's name, ISBN number, price, and cover image. This project utilizes modern web technologies like React, Bootstrap, and Firebase for a seamless and efficient user experience.
+BookHive is a web application designed for managing and storing book information, including the book's name, ISBN number, price, and cover image. This project utilizes modern web technologies like React, Bootstrap, and Firebase for a seamless and efficient user experience.
 
 ## Table of Contents
 - [Features](#features)
