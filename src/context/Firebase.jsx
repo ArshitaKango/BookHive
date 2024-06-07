@@ -16,6 +16,10 @@ import {
     collection,
     addDoc,
     getDocs,
+    getDoc,
+    doc,
+    query,
+    where,
 } from "firebase/firestore";
 
 
@@ -84,10 +88,51 @@ export const FirebaseProvider = (props) => {
     }
 
 
+    const getBookById=async (id)=>{
+        const docRef=doc(firestore,'books',id);
+
+        const result =await getDoc(docRef);
+        return result;
+
+
+    }
+
+
 
     const getImageURL=(path)=>{
         return getDownloadURL(ref(storage,path));
     }
+
+
+    const placeOrder = async (bookId,qty) => {
+        const collectionRef = collection(firestore, "books", bookId, "orders");
+        const result = await addDoc(collectionRef, {
+          userID: user.uid,
+          userEmail: user.email,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          qty: Number(qty),
+        });
+        return result;
+      };
+
+
+
+
+      const fetchMyBooks = async (userId) => {
+        const collectionRef = collection(firestore, "books");
+        const q = query(collectionRef, where("userID", "==", userId));
+    
+        const result = await getDocs(q);
+        return result;
+      };
+    
+      const getOrders = async (bookId) => {
+        const collectionRef = collection(firestore, "books", bookId, "orders");
+        const result = await getDocs(collectionRef);
+        return result;
+      };
+    
 
 
     const isLoggedIn = user ? true : false;
@@ -100,7 +145,12 @@ export const FirebaseProvider = (props) => {
             handleCreateNewListing,
             listAllBooks,
             getImageURL,
+            getBookById,
+            placeOrder,
+            fetchMyBooks,
+            getOrders,
             isLoggedIn,
+            user,
             
         }}>
             {props.children}
